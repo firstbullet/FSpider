@@ -1,4 +1,4 @@
-###命令行使用
+###FSpider命令行使用
 ```
 php index.php url deep
 
