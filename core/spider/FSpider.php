@@ -37,13 +37,7 @@ class FSpider
 
         $this->checkUrl();
 
-        $this->Video91($this->url);
-
-//        $this->downloadVideo($v);
-//        $this->downloadImage($url);
-
-
-//        $this->grab();
+        $this->grab();
 
     }
 
@@ -85,8 +79,7 @@ class FSpider
      */
     public function request($requestUrl)
     {
-//        $header = array("Host:198.255.82.90", "Accept:*/*");
-        $header = array("Host:www.91porn.com", "Accept:*/*");
+        $header = array("Host:127.0.0.1", "Accept:*/*");
 
         //$referer = parse_url($requestUrl)['host'];
 
@@ -106,7 +99,7 @@ class FSpider
 
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
-        curl_setopt($ch, CURLOPT_COOKIE, 'Cookie: __cfduid=dee1a05f1e031a9fe1f0782423d083bd81563632026; CLIPSHARE=msub4mafokd5qcg6rlg971opu1; __utma=50351329.2040421704.1563632030.1563632030.1563632030.1; __utmb=50351329.0.10.1563632030; __utmc=50351329; __utmz=50351329.1563632030.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __51cke__=; watch_times=1; __tins__3878067=%7B%22sid%22%3A%201563632030013%2C%20%22vd%22%3A%202%2C%20%22expires%22%3A%201563633846984%7D; __51laig__=2');
+        //curl_setopt($ch, CURLOPT_COOKIE, '');
 
 
         $this->resource = curl_exec($ch);
@@ -265,30 +258,6 @@ class FSpider
         fclose($handle);
 
         return $file_path;
-    }
-
-    public function Video91($url)
-    {
-        $resource = $this->request($url);
-
-        $list_pattern = '/http\:\/\/www\.91porn\.com\/view_video.php\?viewkey\=[\d\w]+/';
-
-        /*$ch = fopen('C:\Users\F\Downloads\aa.html', 'r');
-        $file = fread($ch, filesize('C:\Users\F\Downloads\aa.html'));
-        preg_match_all($list_pattern, $file, $list_urls);*/
-
-        preg_match_all($list_pattern, $resource, $list_urls);
-
-        foreach ($list_urls[0] as $key => $value) {
-
-            $detail_res = $this->request($value);
-
-            $detail_pattern = '/http\:\/\/198.255.82.90\/\/mp43\/\d+\.mp4\?st\=[a-zA-Z0-9\&\=]+/i';
-
-            preg_match_all($detail_pattern, $detail_res, $videoUrl);
-
-            echo '已下载：' . $this->downloadVideo($videoUrl) . "\r\n";
-        }
     }
 
 }
